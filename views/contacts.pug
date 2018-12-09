@@ -1,0 +1,42 @@
+doctype html
+html
+	head
+		title All Contacts
+		
+	body
+		h3 Contacts
+
+		
+		table
+			thead
+				tr
+					th Full Name
+					th Full Address
+					th Phone Number
+					th Email
+					th Contact by Phone
+					th Contact by Mail
+					th Contact by Email
+			tbody
+				
+				each contact in contacts
+					
+					tr
+						td #{contact['fullname']}
+						td #{contact['address']}					
+						td #{contact['phonenumber']}					
+						td #{contact['email']}					
+						td #{contact['contactbyphone']}
+						td #{contact['contactbymail']}
+						td #{contact['contactbyemail']}
+
+		p
+			a(href="/mailer") Add Contact
+
+
+
+
+
+
+
+			
