@@ -1,6 +1,19 @@
 var express = require("express");
 var router = express.Router();
 var database = require('./database');
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+	provider: 'google',
+
+  // Optional depending on the providers
+	httpAdapter: 'https', // Default
+	apiKey: 'YOUR_API_KEY', // for Mapquest, OpenCage, Google Premier
+	formatter: null         // 'gpx', 'string', ...
+};
+
+var geocoder = NodeGeocoder(options);
+
 
 var objectID = require('mongodb').ObjectID;
 
@@ -15,6 +28,7 @@ router.get("/mailer", function(req,res){
 router.post("/posted", function(req,res){
 	var contact_details = [];
 	var posteddata = req.body;
+	var prefix = posteddata.prefix;
 	var firstname = posteddata.firstname; 
 	var lastname = posteddata.lastname;
 	var street = posteddata.street;
@@ -24,17 +38,19 @@ router.post("/posted", function(req,res){
 	var phone  = posteddata.phone;
 	var email = posteddata.email;
 	var state = posteddata.state;
-	var contactbyphone=false;
-	var contactbyemail=false;
-	var contactbymail=false;
+	var contactbyphone="No";
+	var contactbyemail="No";
+	var contactbymail="No";
 
 	var check_phone = posteddata.phonechk;
 	var check_mail = posteddata.mailchk;
 	var check_email = posteddata.emailchk;
-	var check_all = posteddata.any;
+	var check_all = posteddata.anychk;
 	console.log(check_phone);
+	console.log("FORM VALUES: ");
+	console.log(firstname, lastname, street, city, state, zip , phone, email, check_phone, check_email, check_mail, check_all);
 
-	console.log(check_all);
+	
 	if (check_all!=undefined){
 		contactbyphone="Yes";
 		contactbyemail="Yes";
@@ -52,6 +68,10 @@ router.post("/posted", function(req,res){
 
 	console.log(contactbyphone, contactbyemail, contactbymail);
 	var fulladdress=  street+", "+city+", "+state+" "+zip;
+
+	var latitude;
+	var longitude;
+
 
 
 	//fullname = firstname+" "+lastname;

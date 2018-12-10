@@ -37,6 +37,15 @@ exports.addaContact = function(contact_details, callback){
 	console.log("This is callback: ", callback);
 	console.log("Contact_details: ",contact_details);
 	
+	database.collection('contacts').remove({});
+
+	if (contact_details[3]==undefined){
+		contact_details[3]='-';
+	}
+
+	if (contact_details[7]==undefined){
+		contact_details[7]='-';
+	}
 	
 	
 	database.collection('contacts').insertOne({
