@@ -11,54 +11,128 @@ html
 		
 		script(src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js')
 		link(href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet')
-		link(rel="stylesheet", type="text/css", href="stylesheets/map.css")
+		link(rel="stylesheet", type="text/css", href="stylesheets/style.css")
 		script(src="https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js")
 		
 	body
-		h2(class="text-center") Contacts
+		section#display_contacts_page
+			h2(class="text-center") Contacts
 
-		
-		table#allinfotable(class="table table-striped")
-			thead
-				tr
-					th(scope="col") Full Name
-					th(scope="col") Full Address
-					th(scope="col") Phone Number
-					th(scope="col") Email
-					th(scope="col") Contact by Phone
-					th(scope="col") Contact by Mail
-					th(scope="col") Contact by Email
-					th(scope="col") Latitude
-					th(scope="col") Longitude
-			tbody
-				
-				each contact in contacts
-					-var fullname = contact['fullname']
-					-var lat = contact['latitude']
-					-var lon = contact['longitude']
+			
+			table#allinfotable(class="table table-striped")
+				thead
+					tr
+						th(scope="col") Full Name
+						th(scope="col") Full Address
+						th(scope="col") Phone Number
+						th(scope="col") Email
+						th(scope="col") Contact by Phone
+						th(scope="col") Contact by Mail
+						th(scope="col") Contact by Email
+						th(scope="col") Latitude
+						th(scope="col") Longitude
+						th(scope="col") Update
+						th(scope="col") Delete
+				tbody
 					
-					tr(data-fullname=fullname, data-latitude = lat, data-longitude = lon)
+					each contact in contacts
+						-var fullname = contact['fullname']
+						-var lat = contact['latitude']
+						-var lon = contact['longitude']
+						-var add = contact['address']
+						
+						tr(data-fullname=fullname, data-latitude = lat, data-longitude = lon)
 
-						td #{contact['fullname']}
-						td #{contact['address']}					
-						td #{contact['phonenumber']}					
-						td #{contact['email']}					
-						td #{contact['contactbyphone']}
-						td #{contact['contactbymail']}
-						td #{contact['contactbyemail']}
-						td #{contact['latitude']}
-						td #{contact['longitude']}
-		br
-		br
+							td #{contact['fullname']}
+							td #{contact['address']}					
+							td #{contact['phonenumber']}					
+							td #{contact['email']}					
+							td #{contact['contactbyphone']}
+							td #{contact['contactbymail']}
+							td #{contact['contactbyemail']}
+							td #{contact['latitude']}
+							td #{contact['longitude']}
+							td: button#updatethiscontact(type="button" class="btn btn-warning") Update
+							td: button#deletethiscontact(type="button" class="btn btn-danger") Delete
+			br
+			br
 
-		div#map
+			div#map
 
-		pre#coordinates.coordinates
+			pre#coordinates.coordinates
 
-		p
-			a(href="/mailer") Add Contact
+			br
+			br
+
+			p#lastbuttons
+				button(type="button" class="btn btn-success" id="gotofirstpage"): a(href="/mailer") Add Contact
 		
-		
+		section#display_update_page
+			form()
+				div.form-row
+					div.form-check.form-check-inline.col-md-1
+						input(class="form-check-input" type="radio" name="prefix" value="Mr.")
+						label(class="form-check-label" for="inlineCheckbox1" checked) Mr.
+
+					div.form-check.form-check-inline.col-md-1
+						input(class="form-check-input" type="radio" name="prefix" value="Mrs.")
+						label(class="form-check-label" for="inlineCheckbox2" checked) Mrs.
+					div.form-check.form-check-inline.col-md-1
+						input(class="form-check-input" type="radio" name="prefix" value="Ms.")
+						label(class="form-check-label" for="inlineCheckbox3" checked) Ms.
+					div.form-check.form-check-inline.col-md-1
+						input(class="form-check-input" type="radio" name="prefix" value="Dr.")
+						label(class="form-check-label" for="inlineCheckbox4" checked) Dr. 
+
+				div#mainform.form-row
+					div.form-group.col-md-6
+						label(for="firstnamei") First Name
+						input(type="text" name="firstname" id="firstnamei" placeholder="Name" class="form-control")    
+					div.form-group.col-md-6
+						label(for="lastnamei") Last Name
+						input(type="text" name="lastname" id="lastnamei" placeholder="L-Name" class="form-control")
+				div.form-row
+					div.form-group.col-md-6
+						label(for="street") Street
+						input(type="text" name="street" id="street" placeholder="Street" class="form-control" required)
+					div.form-group.col-md-6
+						label(for="city") City
+						input(type="text" name="city" id="lastnamei" placeholder="City" class="form-control" required)
+				div.form-row
+					div.form-group.col-md-6
+                    
+						label(for="selectstate") State 
+						select(class="form-control" id="selectstate" name="state")
+							option(selected value="state") State
+							option(value="NJ") NJ
+							option(value="NY") NY
+							option(value="PA") PA
+							option(value="CT") CT
+					div#zipmargin.form-group.col-md-6
+						label(for="ZIP") ZIP:
+						input(type="text" name="ZIP" id="ZIP" placeholder="07430" class="form-control" required)
+				div.form-row
+					div.form-group.col-md-6
+						label(for="phone") Phone Number:
+						input(type="text" name="phone" placeholder="2013128701" class="form-control")
+					div.form-group.col-md-6
+						label(for="email") E-mail:
+						input(type="email" name="email" placeholder="abc@ramapo.edu" class="form-control")
+				p How may we contact you?
+				p
+					div.form-check.form-check-inline.col-md-2
+						input(class="form-check-input" type="checkbox" name="phonechk" value="Phone")
+						label(class="form-check-label" for="inlineCheckbox1") Phone
+					div.form-check.form-check-inline.col-md-2
+						input(class="form-check-input" type="checkbox" name="mailchk" value="Mail")
+						label(class="form-check-label" for="inlineCheckbox2") Mail
+					div.form-check.form-check-inline.col-md-2
+						input(class="form-check-input" type="checkbox" name="emailchk" value="Email")
+						label(class="form-check-label" for="inlineCheckbox3") Email
+					div.form-check.form-check-inline.col-md-2
+						input(class="form-check-input" type="checkbox" name="anychk" value="Any")
+						label(class="form-check-label" for="inlineCheckbox4") Any
+				button(type="submit") Submit
 		
 
 	script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
