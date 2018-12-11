@@ -1,19 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var database = require('./database');
-var NodeGeocoder = require('node-geocoder');
+var geo = require('mapbox-geocoding');
 
-var options = {
-	provider: 'google',
-
-  // Optional depending on the providers
-	httpAdapter: 'https', // Default
-	apiKey: 'YOUR_API_KEY', // for Mapquest, OpenCage, Google Premier
-	formatter: null         // 'gpx', 'string', ...
-};
-
-var geocoder = NodeGeocoder(options);
-
+geo.setAccessToken('pk.eyJ1IjoiYW1pc2g1MDE3IiwiYSI6ImNqcGhubDZlbTB5aWszcW9iMzQ2cjRqazcifQ.ouQSIdcWKt5zV264M6wkPg');
 
 var objectID = require('mongodb').ObjectID;
 
@@ -46,9 +36,13 @@ router.post("/posted", function(req,res){
 	var check_mail = posteddata.mailchk;
 	var check_email = posteddata.emailchk;
 	var check_all = posteddata.anychk;
-	console.log(check_phone);
-	console.log("FORM VALUES: ");
-	console.log(firstname, lastname, street, city, state, zip , phone, email, check_phone, check_email, check_mail, check_all);
+	//console.log(check_phone);
+	//console.log("FORM VALUES: ");
+		//fullname = firstname+" "+lastname;
+	//Prefix, first name, last name, street, city, state, zip, phone, email, contact
+	
+
+	//console.log(firstname, lastname, street, city, state, zip , phone, email, check_phone, check_email, check_mail, check_all);
 
 	
 	if (check_all!=undefined){
@@ -66,30 +60,39 @@ router.post("/posted", function(req,res){
 		contactbyemail="Yes";
 	}
 
-	console.log(contactbyphone, contactbyemail, contactbymail);
+	//console.log(contactbyphone, contactbyemail, contactbymail);
 	var fulladdress=  street+", "+city+", "+state+" "+zip;
 
 	var latitude;
 	var longitude;
 
+	geo.geocode('mapbox.places', fulladdress, function (err, geoInfo) {
+    	console.log("DATA FROM GEOCODING");
+    	console.log(geoInfo);
+    	longitude = geoInfo.features[0].center[0];
+        latitude = geoInfo.features[0].center[1];
 
-
-	//fullname = firstname+" "+lastname;
-	//Prefix, first name, last name, street, city, state, zip, phone, email, contact
-	contact_details.push(firstname,lastname, fulladdress, phone, email, contactbyphone, contactbymail, contactbyemail );
+        console.log("The longitude is", longitude);
+        console.log("The latitude is: ",latitude);
+    //	console.log("PUSHING INFO");
+		contact_details.push(firstname,lastname, fulladdress, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
 
 	
-	database.addaContact(contact_details, function(err,resp){
-		if (err){
-			console.log(err);
-			return;
-		}
-		console.log("HERE BEING RENDERED")
+		database.addaContact(contact_details, function(err,resp){
+			if (err){
+				console.log(err);
+				return;
+			}
+			//console.log("HERE BEING RENDERED")
 		//clconsole.log(res);
-		res.render("submitted",{name:contact_details});
+			res.render("submitted",{name:contact_details});
+		});
+
+
 	});
 
 
-})
+ });
+
 
 module.exports=router;

@@ -34,10 +34,9 @@ exports.establishconnection = function(){
 
 
 exports.addaContact = function(contact_details, callback){
-	console.log("This is callback: ", callback);
-	console.log("Contact_details: ",contact_details);
+//	console.log("This is callback: ", callback);
+//	console.log("Contact_details: ",contact_details);
 	
-	database.collection('contacts').remove({});
 
 	if (contact_details[3]==undefined){
 		contact_details[3]='-';
@@ -47,7 +46,7 @@ exports.addaContact = function(contact_details, callback){
 		contact_details[7]='-';
 	}
 	
-	
+	//database.collection('contacts').remove();
 	database.collection('contacts').insertOne({
 		
 		fullname : contact_details[0]+" "+contact_details[1],
@@ -57,13 +56,15 @@ exports.addaContact = function(contact_details, callback){
 		contactbyphone: contact_details[5],
 		contactbymail: contact_details[6],
 		contactbyemail: contact_details[7],
+		latitude: contact_details[8],
+		longitude: contact_details[9]
 
 	}, function(err, result){
 		if (err){
 			console.log(err);
 		}
 		else {
-			console.log("RECORD SUCCESSFULLY ADDED");
+//			console.log("RECORD SUCCESSFULLY ADDED");
 			callback();
 		}
 
