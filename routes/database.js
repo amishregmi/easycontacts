@@ -38,27 +38,33 @@ exports.addaContact = function(contact_details, callback){
 //	console.log("Contact_details: ",contact_details);
 	
 
-	if (contact_details[3]==undefined){
-		contact_details[3]='-';
+	if (contact_details[4]==undefined){
+		contact_details[4]='-';
 	}
 
-	if (contact_details[7]==undefined){
-		contact_details[7]='-';
+	if (contact_details[8]==undefined){
+		contact_details[8]='-';
 	}
-	
+	console.log("INSERTING PREFIX", contact_details[0]);
 	//database.collection('contacts').remove();
 	database.collection('contacts').insertOne({
-		
-		fullname : contact_details[0]+" "+contact_details[1],
-		address: contact_details[2],
-		phonenumber : contact_details[3],
-		email: contact_details[4],
-		contactbyphone: contact_details[5],
-		contactbymail: contact_details[6],
-		contactbyemail: contact_details[7],
-		latitude: contact_details[8],
-		longitude: contact_details[9]
+////contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
 
+
+		prefix: contact_details[0],
+		firstname : contact_details[1],
+		lastname: contact_details[2],
+		street: contact_details[3],
+		city: contact_details[4],
+		state:contact_details[5],
+		zip:contact_details[6],
+		phone: contact_details[7],
+		email: contact_details[8],
+		contactbyphone:contact_details[9],
+		contactbymail: contact_details[10],
+		contactbyemail: contact_details[11],
+		latitude: contact_details[12],
+		longitude: contact_details[13]
 	}, function(err, result){
 		if (err){
 			console.log(err);

@@ -6,9 +6,9 @@ var objectID = require('mongodb').ObjectID;
 router.get('/', function(req,res){
 	database.getAllContacts().find().toArray(function(err,result){
 		if(!err){
-
-			console.log(result);
-			res.render('contacts',{contacts:result});
+			console.log("SENDING JSON CONTACTS: ");
+			//console.log(result);
+			res.render('contacts', {contacts: result});
 		}
 	});
 });

@@ -22,8 +22,10 @@ html
 			table#allinfotable(class="table table-striped")
 				thead
 					tr
+						th(scope="col") Prefix
 						th(scope="col") Full Name
-						th(scope="col") Full Address
+						th(scope="col") Address
+						th(scope="col") Zip
 						th(scope="col") Phone Number
 						th(scope="col") Email
 						th(scope="col") Contact by Phone
@@ -36,23 +38,37 @@ html
 				tbody
 					
 					each contact in contacts
-						-var fullname = contact['fullname']
-						-var lat = contact['latitude']
-						-var lon = contact['longitude']
-						-var add = contact['address']
-						
-						tr(data-fullname=fullname, data-latitude = lat, data-longitude = lon)
+						-var prefix = contact['prefix']
+						-var firstname = contact['firstname']
+						-var lastname = contact['lastname']
+						-var street = contact['street']
+						-var city = contact['city']
+						-var state = contact['state']
+						-var zip = contact['zip']
+						-var phone = contact['phone']
+						-var email = contact['email']
+						-var contactbyphone = contact['contactbyphone']
+						-var contactbymail = contact['contactbymail']
+						-var contactbyemail = contact['contactbyemail']
+						-var latitude = contact['latitude']
+						-var longitude = contact['longitude']
+						-var fullname = firstname+" "+lastname
+						-var address = street+" "+city
 
-							td #{contact['fullname']}
-							td #{contact['address']}					
-							td #{contact['phonenumber']}					
-							td #{contact['email']}					
-							td #{contact['contactbyphone']}
-							td #{contact['contactbymail']}
+						
+						tr(data-fullname=fullname, data-latitude = latitude, data-longitude = longitude)
+							td #{contact['prefix']}
+							td #{fullname}
+							td #{address}
+							td #{zip}					
+							td #{phone}					
+							td #{email}					
+							td #{contactbyphone}
+							td #{contactbymail}
 							td #{contact['contactbyemail']}
-							td #{contact['latitude']}
-							td #{contact['longitude']}
-							td: button#updatethiscontact(type="button" class="btn btn-warning") Update
+							td #{latitude}
+							td #{longitude}
+							td: button#updatethiscontact(data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
 							td: button#deletethiscontact(type="button" class="btn btn-danger") Delete
 			br
 			br
@@ -65,7 +81,7 @@ html
 			br
 
 			p#lastbuttons
-				button(type="button" class="btn btn-success" id="gotofirstpage"): a(href="/mailer") Add Contact
+				a(href="/mailer"): button(type="button" class="btn btn-success" id="gotofirstpage") Add Contact
 		
 		section#display_update_page
 			form()
@@ -97,7 +113,7 @@ html
 						input(type="text" name="street" id="street" placeholder="Street" class="form-control" required)
 					div.form-group.col-md-6
 						label(for="city") City
-						input(type="text" name="city" id="lastnamei" placeholder="City" class="form-control" required)
+						input(type="text" name="city" id="cityi" placeholder="City" class="form-control" required)
 				div.form-row
 					div.form-group.col-md-6
                     
@@ -114,23 +130,23 @@ html
 				div.form-row
 					div.form-group.col-md-6
 						label(for="phone") Phone Number:
-						input(type="text" name="phone" placeholder="2013128701" class="form-control")
+						input(type="text" name="phone" id="phonei" placeholder="2013128701" class="form-control")
 					div.form-group.col-md-6
 						label(for="email") E-mail:
-						input(type="email" name="email" placeholder="abc@ramapo.edu" class="form-control")
+						input(id="updateemail" type="email" name="email" placeholder="abc@ramapo.edu" class="form-control")
 				p How may we contact you?
 				p
 					div.form-check.form-check-inline.col-md-2
-						input(class="form-check-input" type="checkbox" name="phonechk" value="Phone")
+						input(class="form-check-input" type="checkbox" name="phonechk" id="phonechki" value="Phone")
 						label(class="form-check-label" for="inlineCheckbox1") Phone
 					div.form-check.form-check-inline.col-md-2
-						input(class="form-check-input" type="checkbox" name="mailchk" value="Mail")
+						input(class="form-check-input" type="checkbox" name="mailchk" id="mailchki" value="Mail")
 						label(class="form-check-label" for="inlineCheckbox2") Mail
 					div.form-check.form-check-inline.col-md-2
-						input(class="form-check-input" type="checkbox" name="emailchk" value="Email")
+						input(class="form-check-input" type="checkbox" name="emailchk" id="emailchki" value="Email")
 						label(class="form-check-label" for="inlineCheckbox3") Email
 					div.form-check.form-check-inline.col-md-2
-						input(class="form-check-input" type="checkbox" name="anychk" value="Any")
+						input(class="form-check-input" id="allchki" type="checkbox" name="anychk" value="Any")
 						label(class="form-check-label" for="inlineCheckbox4") Any
 				button(type="submit") Submit
 		
@@ -139,11 +155,3 @@ html
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
 	script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")
 	script(type="text/javascript", src="javascripts/mapdraw.js")
-	
-	
-
-
-
-
-
-			

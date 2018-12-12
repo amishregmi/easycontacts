@@ -25,10 +25,10 @@ $(document).ready(function(){
     var firstcell = row.cells[0];
     console.log("FIRSTCELL", firstcell);
     console.log("FIRST CELL VAL", firstcell.innerHTML); // WORKING
-    var fullname = row.cells[0].innerHTML;
-    var lat = row.cells[7].innerHTML;
-    var lon  = row.cells[8].innerHTML;
-    var address = row.cells[1].innerHTML;
+    var fullname = row.cells[1].innerHTML;
+    var lat = row.cells[9].innerHTML;
+    var lon  = row.cells[10].innerHTML;
+    var address = row.cells[2].innerHTML;
 
     var displaypopup = fullname+ " "+address;
     var popup = new mapboxgl.Popup({ offset: 25 })
@@ -54,10 +54,10 @@ $(document).ready(function(){
       console.log("DETAILS CATCHED: ",name,lat,lon);
 
     // 
-     // map.setView(address, 7);
-      map.flyTo({
-        center:[lon,lat]
-      });
+   // map.setView(address, 7);
+    map.flyTo({
+      center:[lon,lat]
+    });
 
   });
 
@@ -65,9 +65,75 @@ $(document).ready(function(){
 });
 
 $("#allinfotable").on("click", "#updatethiscontact", function(){
+    
     showUpdate();
     
-})
+    var prefix = $(this).data("prefix");
+    var firstname = $(this).data("firstname");
+    var lastname = $(this).data("lastname");
+    var street= $(this).data("street");
+    var city= $(this).data("city");
+    var state=$(this).data("state");
+    var zip = $(this).data("zip");
+    var phone = $(this).data("phone");
+    var email=$(this).data("email");
+    var contactbyphone=$(this).data("contactbyphone");
+    var contactbyemail=$(this).data("contactbyemail");
+    var contactbymail=$(this).data("contactbymail");
+//if state not change = state
+//otherwise NJ
+    console.log(prefix, firstname, lastname, street, city, state, zip, phone, email, contactbyphone, contactbyemail, contactbymail);
+//contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
+   // console.log(fillemail);
+    //For updating radiovals:
+
+    console.log("CHECKBOX: ", contactbyphone, contactbyemail, contactbymail);
+    var $radios = $('input:radio[name=prefix]');
+   // if($radios.is(':checked') === false) {
+     //   $radios.filter('[value=Male]').prop('checked', true);
+    //}
+    if (prefix=="Mr."){
+      $radios.filter('[value="Mr."]').prop('checked',true);
+    }
+    else if (prefix=="Mrs."){
+      $radios.filter('[value="Mrs."]').prop('checked',true);
+    }
+    else if (prefix=="Ms."){
+      $radios.filter('[value="Ms."]').prop('checked',true);
+    }
+    else if (prefix=="Dr."){
+    $radios.filter('[value="Dr."]').prop('checked',true);
+    }
+
+    $('#firstnamei').val(firstname);
+    $('#lastnamei').val(lastname);
+    $('#street').val(street);
+    $('#cityi').val(city);
+    $('#ZIP').val(zip);
+    $('#phonei').val(phone);
+    $('#updateemail').val(email);
+
+    $("#selectstate").val(state).attr("selected", "selected");
+
+    if (contactbyphone=="Yes" && contactbyemail=="Yes" && contactbymail== "Yes"){
+      console.log("INSIDE ALL CHECK");
+      $("#allchki").prop('checked',true);
+    }
+
+    if (contactbyphone=="Yes" && contactbyemail=="No" && contactbymail=="No"){
+      console.log("INSIDE PHONE CHECK");
+      $("#phonechki").prop('checked',true);
+    }
+    if (contactbymail=="Yes" && contactbyphone=="No" && contactbyemail=="No"){
+      console.log("INSIDE MAIL CHECK");
+      $("#mailchki").prop('checked',true);
+    }
+    if (contactbyemail=="YES" && contactbymail=="No" && contactbyphone=="No"){
+      console.log("INSIDE EMAIL CHECK");
+      $("#emailchki").prop('checked',true);
+    }
+
+});
 
 
 

@@ -19,6 +19,8 @@ router.post("/posted", function(req,res){
 	var contact_details = [];
 	var posteddata = req.body;
 	var prefix = posteddata.prefix;
+	console.log("PREFIX");
+	console.log(prefix);
 	var firstname = posteddata.firstname; 
 	var lastname = posteddata.lastname;
 	var street = posteddata.street;
@@ -68,14 +70,14 @@ router.post("/posted", function(req,res){
 
 	geo.geocode('mapbox.places', fulladdress, function (err, geoInfo) {
     	console.log("DATA FROM GEOCODING");
-    	console.log(geoInfo);
+    	//console.log(geoInfo);
     	longitude = geoInfo.features[0].center[0];
         latitude = geoInfo.features[0].center[1];
 
         console.log("The longitude is", longitude);
         console.log("The latitude is: ",latitude);
     //	console.log("PUSHING INFO");
-		contact_details.push(firstname,lastname, fulladdress, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
+		contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
 
 	
 		database.addaContact(contact_details, function(err,resp){
