@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 
   //For each row in the table.
-  console.log("WORKING TILL HERE");
+ // console.log("WORKING TILL HERE");
   var table = document.getElementById('allinfotable');
 
   var rowLength = table.rows.length;
@@ -23,8 +23,8 @@ $(document).ready(function(){
     cells = row.cells.length;
     //firstcell
     var firstcell = row.cells[0];
-    console.log("FIRSTCELL", firstcell);
-    console.log("FIRST CELL VAL", firstcell.innerHTML); // WORKING
+    //console.log("FIRSTCELL", firstcell);
+    //console.log("FIRST CELL VAL", firstcell.innerHTML); // WORKING
     var fullname = row.cells[1].innerHTML;
     var lat = row.cells[9].innerHTML;
     var lon  = row.cells[10].innerHTML;
@@ -40,7 +40,7 @@ $(document).ready(function(){
       .setPopup(popup)
       .addTo(map);
 
-    console.log("ENTERING HOVER");
+   // console.log("ENTERING HOVER");
 
 
   }
@@ -51,7 +51,7 @@ $(document).ready(function(){
       var lon = $(this).data("longitude");
       var address = $(this).data("add");
 
-      console.log("DETAILS CATCHED: ",name,lat,lon);
+     // console.log("DETAILS CATCHED: ",name,lat,lon);
 
     // 
    // map.setView(address, 7);
@@ -67,7 +67,8 @@ $(document).ready(function(){
 $("#allinfotable").on("click", "#updatethiscontact", function(){
     
     showUpdate();
-    
+    var ids=$(this).data("ids");
+    console.log("Id is " + ids);
     var prefix = $(this).data("prefix");
     var firstname = $(this).data("firstname");
     var lastname = $(this).data("lastname");
@@ -82,12 +83,12 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
     var contactbymail=$(this).data("contactbymail");
 //if state not change = state
 //otherwise NJ
-    console.log(prefix, firstname, lastname, street, city, state, zip, phone, email, contactbyphone, contactbyemail, contactbymail);
+  //  console.log(ids, prefix, firstname, lastname, street, city, state, zip, phone, email, contactbyphone, contactbyemail, contactbymail);
 //contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
    // console.log(fillemail);
     //For updating radiovals:
 
-    console.log("CHECKBOX: ", contactbyphone, contactbyemail, contactbymail);
+  //  console.log("CHECKBOX: ", contactbyphone, contactbyemail, contactbymail);
     var $radios = $('input:radio[name=prefix]');
    // if($radios.is(':checked') === false) {
      //   $radios.filter('[value=Male]').prop('checked', true);
@@ -105,7 +106,8 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
     $radios.filter('[value="Dr."]').prop('checked',true);
     }
 
-    $('#firstnamei').val(firstname);
+    $('#hideforid').val(ids);
+    $('#firstnamei').val(firstname).attr("data-idval",ids);
     $('#lastnamei').val(lastname);
     $('#street').val(street);
     $('#cityi').val(city);
@@ -116,20 +118,22 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
     $("#selectstate").val(state).attr("selected", "selected");
 
     if (contactbyphone=="Yes" && contactbyemail=="Yes" && contactbymail== "Yes"){
-      console.log("INSIDE ALL CHECK");
+     // console.log("INSIDE ALL CHECK");
       $("#allchki").prop('checked',true);
     }
 
-    if (contactbyphone=="Yes" && contactbyemail=="No" && contactbymail=="No"){
-      console.log("INSIDE PHONE CHECK");
+    else if (contactbyphone=="Yes"){
+    //  console.log("INSIDE PHONE CHECK");
       $("#phonechki").prop('checked',true);
+      $("#mailchki").prop('checked',false);
+      $("#emailchki").prop('checked',false);
     }
-    if (contactbymail=="Yes" && contactbyphone=="No" && contactbyemail=="No"){
-      console.log("INSIDE MAIL CHECK");
+    if (contactbymail=="Yes"){
+     // console.log("INSIDE MAIL CHECK");
       $("#mailchki").prop('checked',true);
     }
-    if (contactbyemail=="YES" && contactbymail=="No" && contactbyphone=="No"){
-      console.log("INSIDE EMAIL CHECK");
+    if (contactbyemail=="Yes"){
+      //console.log("INSIDE EMAIL CHECK");
       $("#emailchki").prop('checked',true);
     }
 
@@ -148,3 +152,9 @@ function mask(start, update, delet){
   //start? $('#display_contacts_page').show() : $('#display_contacts_page').hide();
 
 }
+
+$("#allinfotable").on("click", "#deletethiscontact", function(){
+  
+  $(this).parent().parent().remove();
+  
+});

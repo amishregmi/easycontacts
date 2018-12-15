@@ -1,6 +1,7 @@
 const http = require("http");
 const express = require("express");
 const bodyParser = require("body-parser");
+var router = express.Router();
 const port = 3000;
 require('dotenv').config();
 const ex_session = require('express-session');
@@ -14,6 +15,7 @@ var cookieParser = require('cookie-parser');
 
 var lessMiddleware = require('less-middleware');
 var db = require('./routes/database.js');
+
 
 require('./routes/database').establishconnection();
 
@@ -35,6 +37,9 @@ app.use("/", require("./routes/mailer.js"));
 app.use("/mailer", require("./routes/mailer.js"));
 app.use("/contacts", require("./routes/contacts.js"));
 
+
+
+module.exports=router;
 server = http.Server(app);
 
 server.listen(port);

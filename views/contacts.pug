@@ -38,6 +38,8 @@ html
 				tbody
 					
 					each contact in contacts
+						-var id = contact["_id"]
+
 						-var prefix = contact['prefix']
 						-var firstname = contact['firstname']
 						-var lastname = contact['lastname']
@@ -68,7 +70,7 @@ html
 							td #{contact['contactbyemail']}
 							td #{latitude}
 							td #{longitude}
-							td: button#updatethiscontact(data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
+							td: button#updatethiscontact(data-ids=contact["_id"], data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
 							td: button#deletethiscontact(type="button" class="btn btn-danger") Delete
 			br
 			br
@@ -84,7 +86,9 @@ html
 				a(href="/mailer"): button(type="button" class="btn btn-success" id="gotofirstpage") Add Contact
 		
 		section#display_update_page
-			form()
+
+			form(action = "updatecontact" method="post" id="parentupdateform")
+				input(type = "hidden" id="hideforid" name="togetid")
 				div.form-row
 					div.form-check.form-check-inline.col-md-1
 						input(class="form-check-input" type="radio" name="prefix" value="Mr.")
@@ -148,10 +152,10 @@ html
 					div.form-check.form-check-inline.col-md-2
 						input(class="form-check-input" id="allchki" type="checkbox" name="anychk" value="Any")
 						label(class="form-check-label" for="inlineCheckbox4") Any
-				button(type="submit") Submit
+				button(type="submit" id="updatecontactinfoz") Update
 		
 
-	script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
-	script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
+	
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js") integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous")
 	script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous")
 	script(type="text/javascript", src="javascripts/mapdraw.js")
