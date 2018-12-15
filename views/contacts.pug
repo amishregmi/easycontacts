@@ -71,7 +71,7 @@ html
 							td #{latitude}
 							td #{longitude}
 							td: button#updatethiscontact(data-ids=contact["_id"], data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
-							td: button#deletethiscontact(type="button" class="btn btn-danger") Delete
+							td: button#deletethiscontact(type="button", data-thiscontactid=contact["_id"], class="btn btn-danger") Delete
 			br
 			br
 

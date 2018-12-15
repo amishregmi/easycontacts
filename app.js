@@ -12,7 +12,7 @@ const url = 'mongodb://localhost:27017/cmps369';
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-
+var ObjectId = require('mongodb').ObjectID;
 var lessMiddleware = require('less-middleware');
 var db = require('./routes/database.js');
 
@@ -37,7 +37,23 @@ app.use("/", require("./routes/mailer.js"));
 app.use("/mailer", require("./routes/mailer.js"));
 app.use("/contacts", require("./routes/contacts.js"));
 
+app.post("/endpoint", function(req,res){
 
+	const givenidtodelete = req.body.deletethisid;
+	console.log("THIS IS THE ID RECEIVED IN MAIN APP: ",givenidtodelete);
+
+	db.deleteonecontact(givenidtodelete, function(err,resp){
+		if (err){
+			console.log("ERROR GOING TO DB TO DELETE");
+		}
+
+		console.log("DELETED");
+		//res.send(req.body);
+	});
+
+
+	
+});
 
 module.exports=router;
 server = http.Server(app);

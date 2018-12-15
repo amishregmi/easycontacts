@@ -171,7 +171,7 @@ router.post("/updatecontact", function(req,res){
 		contact_details_update.push(req_id, prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
 
 	
-		database.updateonecontact(contact_details_update, async function(err,resp){
+		database.updateonecontact(contact_details_update, function(err,resp){
 			if (err){
 				console.log(err);
 				return;

@@ -154,7 +154,25 @@ function mask(start, update, delet){
 }
 
 $("#allinfotable").on("click", "#deletethiscontact", function(){
-  
+  console.log("INSIDE DELETE CLIENT SIDE FUNCTION");
+  var data = {}
+  data.deletethisid = $(this).data("thiscontactid");
+
+  $.ajax({
+    type: 'POST',
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    url: 'http://localhost:3000/endpoint',
+    success: function(data){
+      console.log('success');
+      console.log(JSON.stringify(data));
+      
+    }
+
+  });
   $(this).parent().parent().remove();
+
+  //$(this).parent().parent().remove();
+
   
 });

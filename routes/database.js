@@ -126,16 +126,18 @@ exports.updateonecontact= function(new_details, callback){
 
 };
 
-
-
-
-
-
-
 exports.deleteonecontact = function(id_contacttodelete, callback){
-	database.collection('contacts').deleteOne({"_id": ObjectId(id_contacttodelete)}, function(err, result){
-		callback(err, result);
-	})
+	console.log("INSIDE DATABASE TO DELETE");
+	console.log(id_contacttodelete);
+	console.log(String(id_contacttodelete));
+	database.collection('contacts').deleteOne({"_id": ObjectId(String(id_contacttodelete))}, function(err){
+		if (err){
+			throw err;
+		}
+		else {console.log("DELETEDDDD");
+		}	
+	});
+	
 };
 
 exports.getAllContacts = function(){
