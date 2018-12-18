@@ -1,0 +1,22 @@
+doctype html
+html
+	head
+		title Login
+		link(rel="stylesheet" type="text/css" href="stylesheets/style.css")
+
+	body
+		div(class='instructions')
+			
+			form(class="registerform" action="login" method="post")
+				p #[strong Please Enter The Login Information]
+				div
+					p
+						label(for="guess") Username:
+						input(type="text" name="username")
+
+					p
+						label(for="guess") Password:
+						input(type="password" name="password")
+
+					button(type="submit") Login
+				

@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 var router = express.Router();
 const port = 3000;
 require('dotenv').config();
-const ex_session = require('express-session');
+const session = require('express-session');
 const dateformat = require('dateformat');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
@@ -15,6 +15,13 @@ var cookieParser = require('cookie-parser');
 var ObjectId = require('mongodb').ObjectID;
 var lessMiddleware = require('less-middleware');
 var db = require('./routes/database.js');
+var bcrypt = require("bcrypt");
+var flash = require("connect-flash");
+var methodOverride = require('method-override');
+
+var routes = require('./routes/mailer');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 
 require('./routes/database').establishconnection();
@@ -30,7 +37,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(cookieParser());
-app.use(ex_session({secret: 'secure-contacts'}));
+app.use(session({secret: 'secure-contacts'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 app.use("/", require("./routes/mailer.js"));
@@ -54,6 +64,80 @@ app.post("/endpoint", function(req,res){
 
 	
 });
+
+var username= "amish";
+var password = "webapp";
+
+bcrypt.genSalt(10, function(err,salt){
+	bcrypt.hash(password, salt,function(err,hash){
+		password=hash;
+		console.log("Hashed password= ",password);
+	});
+});
+
+
+passport.use(new LocalStrategy(
+    {
+      usernameField: 'username',
+      passwordField: 'password'
+    },
+
+    function(user, pswd, done) {
+        if ( user != username ) {
+            console.log("Username mismatch");
+            return done(null, false);
+        }
+
+        bcrypt.compare(pswd, password, function(err, isMatch) {
+            if (err) return done(err);
+            if ( !isMatch ) {
+                console.log("Password mismatch");
+            }
+            else {
+                console.log("Valid credentials");
+            }
+            done(null, isMatch);
+        });
+      }
+  ));
+
+  passport.serializeUser(function(username, done) {
+      // this is called when the user object associated with the session
+      // needs to be turned into a string.  Since we are only storing the user
+      // as a string - just return the username.
+      done(null, username);
+  });
+
+  passport.deserializeUser(function(username, done) {
+      // normally we would find the user in the database and
+      // return an object representing the user (for example, an object
+      // that also includes first and last name, email, etc)
+      done(null, username);
+   });
+
+
+// Posts to login will have username/password form data.
+// passport will call the appropriate functions...
+routes.post('/login',
+    passport.authenticate('local', { successRedirect: '/contacts',
+                                     failureRedirect: '/login_fail',
+                                  })
+);
+
+routes.get('/login', function (req, res) {
+  res.render('login', {});
+});
+
+routes.get('/login_fail', function (req, res) {
+  res.render('login_fail', {});
+});
+
+routes.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/login');
+});
+
+
 
 module.exports=router;
 server = http.Server(app);

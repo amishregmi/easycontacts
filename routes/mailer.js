@@ -17,6 +17,14 @@ router.get("/mailer", function(req,res){
 });
 
 
+var ensureLoggedIn = function(req, res, next) {
+	if ( req.user ) {
+		next();
+	}
+	else {
+		res.redirect("/login");
+	}
+}
 
 router.post("/posted", function(req,res){
 	var contact_details = [];
@@ -100,7 +108,7 @@ router.post("/posted", function(req,res){
  });
 
 
-router.post("/updatecontact", function(req,res){
+router.post("/updatecontact", ensureLoggedIn, function(req,res){
 
 
 	console.log("UPDATE CONTACTS POST REQUEST RECEIVED IN SERVER");

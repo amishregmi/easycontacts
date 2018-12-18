@@ -15,10 +15,18 @@ html
 		script(src="https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js")
 		
 	body
+		nav(class="navbar fixed-top navbar-dark bg-dark justify-content-between")
+			a(class="navbar-brand" href="/mailer") Add Contact
+			form(class="form-inline")
+				input(class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search_input")
+		
+		br
+		br
+		
 		section#display_contacts_page
-			h2(class="text-center") Contacts
-
-			
+			br
+			h1(id= "contactsheader" class="text-center") CONTACTS
+			br
 			table#allinfotable(class="table table-striped")
 				thead
 					tr
@@ -26,16 +34,16 @@ html
 						th(scope="col") Full Name
 						th(scope="col") Address
 						th(scope="col") Zip
-						th(scope="col") Phone Number
+						th(scope="col") Number
 						th(scope="col") Email
-						th(scope="col") Contact by Phone
-						th(scope="col") Contact by Mail
-						th(scope="col") Contact by Email
+						th(scope="col") Call Me?
+						th(scope="col") Mail?
+						th(scope="col") Email?
 						th(scope="col") Latitude
 						th(scope="col") Longitude
 						th(scope="col") Update
 						th(scope="col") Delete
-				tbody
+				tbody(id="myTable")
 					
 					each contact in contacts
 						-var id = contact["_id"]
@@ -68,22 +76,23 @@ html
 							td #{contactbyphone}
 							td #{contactbymail}
 							td #{contact['contactbyemail']}
-							td #{latitude}
-							td #{longitude}
+							td #{contact['latitude']}
+							td #{contact['longitude']}
+							
 							td: button#updatethiscontact(data-ids=contact["_id"], data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
 							td: button#deletethiscontact(type="button", data-thiscontactid=contact["_id"], class="btn btn-danger") Delete
+		
+			
 			br
-			br
-
 			div#map
 
 			pre#coordinates.coordinates
 
-			br
-			br
+		
+		
 
-			p#lastbuttons
-				a(href="/mailer"): button(type="button" class="btn btn-success" id="gotofirstpage") Add Contact
+			
+				
 		
 		section#display_update_page
 

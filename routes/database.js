@@ -10,6 +10,17 @@ geo.setAccessToken('pk.eyJ1IjoiYW1pc2g1MDE3IiwiYSI6ImNqcGhubDZlbTB5aWszcW9iMzQ2c
 var contacts; //Collection Name
 var contactsList; //Array of current contacts
 
+
+var ensureLoggedIn = function(req, res, next) {
+	if ( req.user ) {
+		next();
+	}
+	else {
+		res.redirect("/login");
+	}
+}
+
+
 exports.establishconnection = function(){
 	MongoClient.connect(url,function(err,db){
 		if(err){

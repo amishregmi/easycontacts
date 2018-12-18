@@ -14,24 +14,25 @@ html
         
     body
         
-        form(action="posted" method="post")
-            div.form-row
-                div.form-check.form-check-inline.col-md-1
+        form(action="posted" method="post" id="mailerpage")
+            div.form-row(id="prefixbuttonsinmailer")
+                div.form-check.form-check-inline.col-md-2
                     input(class="form-check-input" type="radio" name="prefix" value="Mr.")
                     label(class="form-check-label" for="inlineCheckbox1" checked) Mr.
                 
-                div.form-check.form-check-inline.col-md-1
+                div.form-check.form-check-inline.col-md-2
                     input(class="form-check-input" type="radio" name="prefix" value="Mrs.")
                     label(class="form-check-label" for="inlineCheckbox2" checked) Mrs.
 
-                div.form-check.form-check-inline.col-md-1
+                div.form-check.form-check-inline.col-md-2
                     input(class="form-check-input" type="radio" name="prefix" value="Ms.")
                     label(class="form-check-label" for="inlineCheckbox3" checked) Ms.
 
-                div.form-check.form-check-inline.col-md-1
+                div.form-check.form-check-inline.col-md-2
                     input(class="form-check-input" type="radio" name="prefix" value="Dr.")
                     label(class="form-check-label" for="inlineCheckbox4" checked) Dr. 
-                        
+            br
+
             div#mainform.form-row
                 div.form-group.col-md-6
                     label(for="firstnamei") First Name
