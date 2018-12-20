@@ -118,8 +118,8 @@ h2{
 
 #allinfotable {
     background-color:   #B0C4DE;
-    width: 97%;
-    margin: auto;
+    width: 100%;
+    
 }
 
 #allinfotable th {
@@ -154,20 +154,52 @@ h2{
 }
 
 #submittedcontainer{
-    width: 800px;
+    width: 60%;
     min-width: 350px;
-    border:1px solid black;
+    border:2px solid red;
+    border-radius: 3px;
+
     margin-top: 30px;
     padding: 10px 10px 10px 10px;
     background-color: lightblue;
-    height: 800px;
-    min-height: 400px;
+    overflow: auto;
+    
 }
 
 h2.centerthishtwo{
     text-align: center;
 }
 
-#logoutbutton{
+#gotocontactssubmitted{
+    margin-left: 20px;
 
 }
+
+/*#texttoalighleft{
+    float: left;
+}
+*/
+.textwithimage{
+    display:flex;
+}
+
+.texttoalignleft{
+    width: 300px;
+    float: left;
+}
+
+.imgtoalignright{
+    flex-grow: 1;
+    height: 200px;
+}
+
+.responsive{
+    max-width: 400px;
+    height: auto;
+}
+
+/*#textwithimage.img{
+    float:right;
+    width: 5px;
+    height: 10px;
+}*/

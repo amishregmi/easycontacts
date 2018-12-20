@@ -92,6 +92,7 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
     var contactbyphone=$(this).data("contactbyphone");
     var contactbyemail=$(this).data("contactbyemail");
     var contactbymail=$(this).data("contactbymail");
+    var ifallchecked = $(this).data("allcheck");
 //if state not change = state
 //otherwise NJ
   //  console.log(ids, prefix, firstname, lastname, street, city, state, zip, phone, email, contactbyphone, contactbyemail, contactbymail);
@@ -130,10 +131,45 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
     $('#updateemail').val(email);
 
     $("#selectstate").val(state).attr("selected", "selected");
+    console.log("ALL CHECK? ", ifallchecked);
 
-    if (contactbyphone=="Yes" && contactbyemail=="Yes" && contactbymail== "Yes"){
-     // console.log("INSIDE ALL CHECK");
+    if(ifallchecked=="Yes" && contactbyphone=="Yes" && contactbyemail == "Yes" && contactbymail=="Yes"){
       $("#allchki").prop('checked',true);
+       $("#phonechki").prop('checked',false);
+      $("#mailchki").prop('checked',false);
+      $("#emailchki").prop('checked',false);
+    }
+    else if (contactbyphone=="Yes" && contactbyemail=="Yes" && contactbymail== "Yes"){
+     // console.log("INSIDE ALL CHECK");
+      $("#phonechki").prop('checked',true);
+      $("#mailchki").prop('checked',true);
+      $("#emailchki").prop('checked',true);
+    }
+
+    else if (contactbyphone=="Yes" && contactbyemail=="Yes"){
+
+      $("#phonechki").prop('checked',true);
+      $("#mailchki").prop('checked',false);
+      $("#emailchki").prop('checked',true);
+
+    }
+
+
+    else if (contactbyphone=="Yes" && contactbymail=="Yes"){
+
+      $("#phonechki").prop('checked',true);
+      $("#mailchki").prop('checked',true);
+      $("#emailchki").prop('checked',false);
+
+    }
+
+
+    else if (contactbymail=="Yes" && contactbyemail=="Yes"){
+
+      $("#phonechki").prop('checked',false);
+      $("#mailchki").prop('checked',true);
+      $("#emailchki").prop('checked',true);
+
     }
 
     else if (contactbyphone=="Yes"){
@@ -142,11 +178,11 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
       $("#mailchki").prop('checked',false);
       $("#emailchki").prop('checked',false);
     }
-    if (contactbymail=="Yes"){
+    else if (contactbymail=="Yes"){
      // console.log("INSIDE MAIL CHECK");
       $("#mailchki").prop('checked',true);
     }
-    if (contactbyemail=="Yes"){
+    else if (contactbyemail=="Yes"){
       //console.log("INSIDE EMAIL CHECK");
       $("#emailchki").prop('checked',true);
     }

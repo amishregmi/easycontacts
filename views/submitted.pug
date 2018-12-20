@@ -11,16 +11,19 @@ html
 		script(type="text/javascript")   
 			    
 	body
-		div.container
-
+		div.container(id="submittedcontainer")
+			br
 			div.jumbortron
-				h2 Contact Information Submitted!
+				h2.centerthishtwo Contact Information Submitted!
 				hr
+				
 				br
-				br
-				p Hi #{name[1]}
-				p Here is the information you submitted
+					
+				h4 Hi #{name[1]}, 
+				h4 Here is the information you submitted:
 				hr
+					
+				
 				p Full Name: #{name[1]+" "+name[2]}
 				p Full Address: #{name[3]+" "+name[4]+", "+name[6]}
 				p Phone: #{name[7]}
@@ -29,14 +32,13 @@ html
 				p Can we contact you by mail? #{name[10]}
 				p Can we contact you by email? #{name[11]}
 				hr
-
-				h5 Your information has been stored in the database.
+				p Your information has been stored in the database.
+				br
 
 				p
 					a(class="btn btn-primary btn-sm" href="/mailer" role=button) Homepage
+					a(class="btn btn-primary btn-sm" href="/contacts" role=button id="gotocontactssubmitted") Contacts
 
-				p
-					a(class="btn btn-primary btn-sm" href="/contacts" role=button) Contacts
 
 
 	script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")

@@ -15,18 +15,18 @@ html
 		script(src="https://unpkg.com/mapbox@1.0.0-beta9/dist/mapbox-sdk.min.js")
 		
 	body
-		nav(class="navbar fixed-top navbar-dark bg-dark justify-content-between")
-			a(class="navbar-brand" href="/mailer") Add Contact
-			form(class="form-inline" id="search-bar-address")
-				input(class="form-control mr-sm-3" type="search" placeholder="Search" aria-label="Search" id="search_input")
-				a(href="logout" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true") Logout
-
+		
 			
 		
-		br
-		br
-		
 		section#display_contacts_page
+			nav(class="navbar fixed-top navbar-dark bg-dark justify-content-between")
+				a(class="navbar-brand" href="/mailer") Add Contact
+				form(class="form-inline" id="search-bar-address")
+					input(class="form-control mr-sm-3" type="search" placeholder="Search" aria-label="Search" id="search_input")
+					a(href="logout" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true") Logout
+		
+			br
+			br
 			br
 			h1(id= "contactsheader" class="text-center") CONTACTS
 			br
@@ -67,6 +67,7 @@ html
 						-var longitude = contact['longitude']
 						-var fullname = firstname+" "+lastname
 						-var address = street+" "+city
+						-var all = contact['allchecked']
 
 						
 						tr(data-fullname=fullname, data-latitude = latitude, data-longitude = longitude)
@@ -82,7 +83,7 @@ html
 							td #{contact['latitude']}
 							td #{contact['longitude']}
 							
-							td: button#updatethiscontact(data-ids=contact["_id"], data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
+							td: button#updatethiscontact(data-ids=contact["_id"], data-allcheck=all, data-prefix=prefix, data-firstname=firstname, data-lastname=lastname, data-street=street, data-city=city, data-state=state, data-zip=zip, data-phone=phone,data-email=email,data-contactbyphone=contactbyphone,data-contactbymail=contactbymail,data-contactbyemail=contactbyemail, type="button" class="btn btn-warning") Update
 							td: button#deletethiscontact(type="button", data-fullname=fullname, data-thiscontactid=contact["_id"], data-latdel=contact["latitude"], data-londel=contact["longitude"] class="btn btn-danger") Delete
 		
 			

@@ -60,6 +60,7 @@ router.post("/posted", function(req,res){
 	var check_mail = posteddata.mailchk;
 	var check_email = posteddata.emailchk;
 	var check_all = posteddata.anychk;
+	console.log("CHECK_ALL ", check_all);
 	//console.log(check_phone);
 	//console.log("FORM VALUES: ");
 		//fullname = firstname+" "+lastname;
@@ -68,12 +69,17 @@ router.post("/posted", function(req,res){
 
 	//console.log(firstname, lastname, street, city, state, zip , phone, email, check_phone, check_email, check_mail, check_all);
 
-	
+	var allchecked = "No";
+	console.log("ALL CHECKED SHOULD BE NO", allchecked);
 	if (check_all!=undefined){
+		allchecked="Yes";
 		contactbyphone="Yes";
 		contactbyemail="Yes";
 		contactbymail="Yes";
 	}
+
+	console.log("ALL CHECKED should be different", allchecked);
+
 	if (check_phone!=undefined){
 		contactbyphone="Yes";
 	}
@@ -99,7 +105,7 @@ router.post("/posted", function(req,res){
        // console.log("The longitude is", longitude);
         //console.log("The latitude is: ",latitude);
     //	console.log("PUSHING INFO");
-		contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
+		contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude, allchecked);
 
 	
 		database.addaContact(contact_details, function(err,resp){

@@ -61,6 +61,8 @@ exports.addaContact = function(contact_details, callback){
 	}
 	console.log("INSERTING PREFIX", contact_details[0]);
 //	database.collection('contacts').remove();
+
+	console.log("INSERTING ALL CHECK, ", contact_details[15]);
 	database.collection('contacts').insertOne({
 ////contact_details.push(prefix, firstname,lastname, street, city, state, zip, phone, email, contactbyphone, contactbymail, contactbyemail, latitude, longitude );
 
@@ -78,7 +80,8 @@ exports.addaContact = function(contact_details, callback){
 		contactbymail: contact_details[10],
 		contactbyemail: contact_details[11],
 		latitude: contact_details[12],
-		longitude: contact_details[13]
+		longitude: contact_details[13],
+		allchecked: contact_details[14]
 	}, function(err, result){
 		if (err){
 			console.log(err);
@@ -123,7 +126,8 @@ exports.updateonecontact= function(new_details, callback){
 			contactbymail: new_details[11],
 			contactbyemail: new_details[12],
 			latitude: new_details[13],
-			longitude: new_details[14]
+			longitude: new_details[14],
+			allchecked: new_details[15]
 
 		}}, function(err,result){
 			if(err){
