@@ -39,7 +39,18 @@ router.post("/posted", function(req,res){
 	var city = posteddata.city;
 	var zip = posteddata.ZIP;
 	var phone  = posteddata.phone;
+	if (phone.length==0){
+		phone="-";
+	}
+
+
+
 	var email = posteddata.email;
+	
+	if (email.length==0){
+		email = "-";
+	}
+
 	var state = posteddata.state;
 	var contactbyphone="No";
 	var contactbyemail="No";

@@ -1,3 +1,4 @@
+var all_markers= {};
 $(document).ready(function(){
   
   $("#display_update_page").hide();
@@ -11,7 +12,6 @@ $(document).ready(function(){
   });
 
 
-
   //For each row in the table.
  // console.log("WORKING TILL HERE");
   var table = document.getElementById('allinfotable');
@@ -21,6 +21,7 @@ $(document).ready(function(){
   for(var i=1; i<rowLength; i+=1){
     var row = table.rows[i];
     cells = row.cells.length;
+
     //firstcell
     var firstcell = row.cells[0];
     //console.log("FIRSTCELL", firstcell);
@@ -40,7 +41,11 @@ $(document).ready(function(){
       .setPopup(popup)
       .addTo(map);
 
+    var required_loc = "lat"+"lon";
+    all_markers[fullname]=marker;
    // console.log("ENTERING HOVER");
+   console.log("ALL MARKERS");
+   console.log(all_markers);
 
 
   }
@@ -95,6 +100,9 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
     //For updating radiovals:
 
   //  console.log("CHECKBOX: ", contactbyphone, contactbyemail, contactbymail);
+   var fulladdress = street+ " "+ city+ " "+ zip;
+
+
     var $radios = $('input:radio[name=prefix]');
    // if($radios.is(':checked') === false) {
      //   $radios.filter('[value=Male]').prop('checked', true);
@@ -143,6 +151,10 @@ $("#allinfotable").on("click", "#updatethiscontact", function(){
       $("#emailchki").prop('checked',true);
     }
 
+
+
+
+
 });
 
 
@@ -163,6 +175,18 @@ $("#allinfotable").on("click", "#deletethiscontact", function(){
   console.log("INSIDE DELETE CLIENT SIDE FUNCTION");
   var data = {}
   data.deletethisid = $(this).data("thiscontactid");
+  var lat = $(this).data("latdel");
+  var lon=$(this).data("londel");
+
+  var location="lat"+"lon";
+  //var required_hide = all_markers[location];
+  //required_hide.remove();
+  console.log("ALL MARKERS",all_markers);
+  var fullname= $(this).data("fullname");
+  console.log("THIS IS THE FULLNAME", fullname);
+  all_markers[fullname].remove();
+
+
 
   $.ajax({
     type: 'POST',
